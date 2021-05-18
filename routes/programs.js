@@ -5,7 +5,7 @@ router.route('/').get((req,res)=>{
     .then(programs=>res.json(programs))
     .catch(err=>res.status(400).json('Error:'+err));
 });
-router.route('/add').get((req,res)=>{
+router.route('/add').post((req,res)=>{
     const classname = req.body.classname;
     const image = req.body.image;
     const description = req.body.description;
