@@ -7,9 +7,11 @@ router.route('/').get((req,res)=>{
 });
 router.route('/add').post((req,res)=>{
     const classname = req.body.classname;
+    const sdateandtime=req.body.sdateandtime;
     const image = req.body.image;
     const description = req.body.description;
     const duration =req.body.duration;
+    const totalexercises=req.body.totalexercises;
     const chooseinstructor=req.body.chooseinstructor;
     const category=req.body.category;
     const access=req.body.access;
@@ -25,18 +27,22 @@ router.route('/add').post((req,res)=>{
             }
         ]
     };
+    const instructorprofile=req.body.instructorprofile;
     const pmaterial=req.body.pmaterial;
     const status=req.body.status;
     const newProgram=new Program({
         classname,
+        sdateandtime,
         image,
         description,
         duration,
+        totalexercises,
         chooseinstructor,
         category,
         access,
         price,
         exercise,
+        instructorprofile,
         pmaterial,
         status,
     })
