@@ -35,7 +35,7 @@ const liveclassSchema=new Schema(
         },
         instructor:{
             name:{type:String},
-            image:{type:String},
+            img:{type:String},
         },
         duration:{
             type:String,

@@ -17,7 +17,7 @@ router.route('/add').post((req, res) => {
         const category=req.body.category;
         const instructor={
             name:req.body.name,
-            image:req.body.image,
+            img:req.body.img,
         };
         const duration =req.body.duration;
         const caloriesburnt=req.body.caloriesburnt;
@@ -57,7 +57,7 @@ router.route('/update/:id').post((req, res) => {
         liveclass.category=req.body.category;
         liveclass.instructor={
             name:req.body.name,
-            image:req.body.image,
+            img:req.body.img,
         };
         liveclass.duration =req.body.duration;
         liveclass.caloriesburnt=req.body.caloriesburnt;
