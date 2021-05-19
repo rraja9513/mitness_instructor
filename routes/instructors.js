@@ -36,7 +36,10 @@ router.route('/login').post((req,res)=>{
         else{
             passport.authenticate("instructorLocal")(req,res,function(){
                 if (req.user) {
-                    var redir = { redirect: "/HomePage" };
+                    var redir = { returnCode: "Su",
+                                  returnMsg:"Login Success",
+                                  returnId:req.user._id
+                };
                     return res.json(redir);
               } else {
                 res.status(400).json({ message: 'Credentials Are Incorrect' });
