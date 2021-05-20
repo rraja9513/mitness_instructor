@@ -6,6 +6,11 @@ router.route('/').get((req, res) => {
       .then(instructors => res.json(instructors))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+  router.route('/search').post((req, res) => {
+    Instructor.find({firstname : req.body.firstname})
+      .then(instructors => res.json(instructors))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
 router.route('/signup').post((req,res)=>{
     const Instructors=new Instructor({ firstname : req.body.firstname,lastname:req.body.lastname,email:req.body.email,role:req.body.role,age:req.body.age,weight:req.body.weight,height:req.body.height,gender:req.body.gender,phonenumber:req.body.phonenumber,career:req.body.career,introduction:req.body.introduction,briefhistory:req.body.briefhistory,specializedin:req.body.specializedin,status:req.body.status,posttype:req.body.posttype,numberofapplicants:req.body.numberofapplicants,numberofattendees:req.body.numberofattendees,numberofsubscribers:req.body.numberofsubscribers});   
         Instructor.register(Instructors,req.body.password,function(err,instructor){
