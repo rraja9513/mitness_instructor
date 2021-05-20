@@ -54,19 +54,19 @@ router.route('/login').post((req,res)=>{
     });
  });
  router.route('/forgotpassword').post((req,res)=>{
-     if(req.isAuthenticated()){
-        Instructor.findOne({ email: req.body.email })
-        .then((instructor) => {
-            instructor.setPassword(req.body.password,(err, instructor) => {
-                if (err) return next(err);
-                instructor.save();
-                res.status(200).json({ message: 'Successful Password Reset' });
-            });
-        })
-     }
-     else{
-         res.redirect('/login');
-     }
+    if(req.isAuthenticated()){
+       Instructor.findOne({ email: req.body.email })
+       .then((instructor) => {
+           instructor.setPassword(req.body.password,(err, instructor) => {
+               if (err) return next(err);
+               instructor.save();
+               res.status(200).json({ message: 'Successful Password Reset' });
+           });
+       })
+    }
+    else{
+        res.redirect('/login');
+    }
 });
 router.route('/changepassword').post((req,res)=>{
     if(req.isAuthenticated()){
