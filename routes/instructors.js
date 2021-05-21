@@ -16,7 +16,10 @@ router.route('/signup').post((req,res)=>{
         Instructor.register(Instructors,req.body.password,function(err,instructor){
             if(err)
             {
-                console.log(err);
+                var redir = { returnCode: "Failure",
+                              returnMsg:"Instructor Already Registered"};
+                              return res.json(redir);
+              
             }
             else{
                 passport.authenticate("instructorLocal")(req,res,function(){
@@ -30,31 +33,43 @@ router.route('/signup').post((req,res)=>{
         })
     });
 router.route('/login').post((req,res)=>{
-    const instructor=new Instructor({
-        email:req.body.email,
-        password:req.body.password
-    });
-    req.login(instructor,function(err){
-        if(err){
-            console.log(err)
-        }
-        else{
-            passport.authenticate("instructorLocal")(req,res,function(){
-                if (req.user) {
-                    var redir = { returnCode: "Su",
-                                  returnMsg:"Login Success",
-                                  returnId:req.user._id
-                };
-                    return res.json(redir);
-              } else {
-                res.status(400).json({ message: 'Credentials Are Incorrect' });
+    if(!req.body.email){
+        res.json({success: false, message: "email was not given"})
+      } else {
+        if(!req.body.password){
+          res.json({success: false, message: "Password was not given"})
+        }else{
+          passport.authenticate('instructorLocal', function (err, user, info) { 
+             if(err){
+               res.json({success: false, message: err})
+             } else{
+              if (! user) {
+                var redir={
+                    Code:"Fa",
+                    Msg:"Login Failed"
+                }
+                return res.json(redir)
+              } else{
+                req.login(user, function(err){
+                  if(err){
+                    res.json({success: false, message: err})
+                  }
+                  else{
+                      var redir={
+                          Code:"Su",
+                          Msg:"Login Success",
+                          id:user._id
+                      }
+                      return res.json(redir)
+                  }
+                })
               }
-            });
+             }
+          })(req, res);
         }
-    });
+      }
  });
  router.route('/forgotpassword').post((req,res)=>{
-    if(req.isAuthenticated()){
        Instructor.findOne({ email: req.body.email })
        .then((instructor) => {
            instructor.setPassword(req.body.password,(err, instructor) => {
@@ -63,10 +78,9 @@ router.route('/login').post((req,res)=>{
                res.status(200).json({ message: 'Successful Password Reset' });
            });
        })
-    }
-    else{
-        res.redirect('/login');
-    }
+       .catch((err)=>{
+        res.json("Instructor  Not  Found")
+      })
 });
 router.route('/changepassword').post((req,res)=>{
     if(req.isAuthenticated()){
@@ -78,6 +92,9 @@ router.route('/changepassword').post((req,res)=>{
             res.status(200).json({ message: 'Password Change Successful' });
         });
     })
+    .catch((err)=>{
+        res.json("Instructor  Not  Found")
+      })
 }
 else{
     res.redirect('/login');
