@@ -139,4 +139,9 @@ router.route('/update/:id').post((req, res) => {
         res.redirect('/login');
     }
   });
+  router.route('/:id').delete((req, res) => {
+    Instructor.findByIdAndDelete(req.params.id)
+      .then(() => res.json('Instructor deleted.'))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
  module.exports=router;
