@@ -5,6 +5,11 @@ router.route('/').get((req,res)=>{
     .then(liveclasses=>res.json(liveclasses))
     .catch(err=>res.status(400).json('Error:'+err));
 });
+router.route('/:id').get((req, res) => {
+  Liveclass.findById(req.params.id)
+    .then(liveclass => res.json(liveclass))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
 router.route('/search').post((req, res) => {
   Liveclass.find({classname : req.body.classname})
     .then(liveclasses => res.json(liveclasses))

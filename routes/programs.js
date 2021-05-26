@@ -5,6 +5,11 @@ router.route('/').get((req,res)=>{
     .then(programs=>res.json(programs))
     .catch(err=>res.status(400).json('Error:'+err));
 });
+router.route('/:id').get((req, res) => {
+    Program.findById(req.params.id)
+      .then(program => res.json(program))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
 router.route('/search').post((req, res) => {
     Program.find({classname : req.body.classname})
       .then(programs => res.json(programs))
