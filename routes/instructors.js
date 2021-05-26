@@ -6,6 +6,11 @@ router.route('/').get((req, res) => {
       .then(instructors => res.json(instructors))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+  router.route('/:id').get((req, res) => {
+    Instructor.findById(req.params.id)
+      .then(instructor => res.json(instructor))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
   router.route('/search').post((req, res) => {
     Instructor.find({firstname : req.body.firstname})
       .then(instructors => res.json(instructors))
@@ -101,7 +106,6 @@ else{
 }
 });
 router.route('/update/:id').post((req, res) => {
-    if(req.isAuthenticated()){
     Instructor.findById(req.params.id)
       .then(instructor => {
         instructor.firstname = req.body.firstname;
@@ -114,11 +118,6 @@ router.route('/update/:id').post((req, res) => {
           .catch(err => res.status(400).json('Error: ' + err));
       })
       .catch(err => res.status(400).json('Error: ' + err));
-    }
-    else
-    {
-        res.redirect('/login');
-    }
   });
   router.route('/eupdate/:id').post((req, res) => {
     if(req.isAuthenticated()){
