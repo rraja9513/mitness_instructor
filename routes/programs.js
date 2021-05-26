@@ -78,7 +78,7 @@ router.route('/update/:id').post((req, res) => {
             category:[
                 {
                     categoryname:req.body.categoryname,
-                    image:req.body.image,
+                    cimage:req.body.cimage,
                     caloriesburnt:req.body.caloriesburnt,
                 }
             ]
