@@ -39,10 +39,10 @@ router.route('/search').post((req, res) => {
       .then(programs => res.json(programs))
       .catch(err => res.status(400).json('Error: ' + err));
   });
-  router.post('/add',upload.single('image'),(req,res,next)=>{
+  router.post('/add',upload.array('images',2),(req,res,next)=>{
     const classname = req.body.classname;
     const sdateandtime=req.body.sdateandtime;
-    const image =req.file.path;
+    const image =req.files[0].path;
     const description = req.body.description;
     const duration =req.body.duration;
     const totalexercises=req.body.totalexercises;
@@ -56,7 +56,7 @@ router.route('/search').post((req, res) => {
         category:[
             {
                 categoryname:req.body.categoryname,
-                cimage:req.body.cimage,
+                cimage:req.files[1].path,
                 caloriesburnt:req.body.caloriesburnt,
             }
         ]
@@ -85,11 +85,11 @@ router.route('/search').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
-    router.post('/update/:id',upload.single('image'),(req,res,next)=>{
+    router.post('/update/:id',upload.array('images',2),(req,res,next)=>{
     Program.findById(req.params.id)
       .then(program => {
         program.classname = req.body.classname;
-        program.image = req.file.path;
+        program.image = req.files[0].path;
         program.description = req.body.description;
         program.duration =req.body.duration;
         program.chooseinstructor=req.body.chooseinstructor;
@@ -102,7 +102,7 @@ router.route('/search').post((req, res) => {
             category:[
                 {
                     categoryname:req.body.categoryname,
-                    cimage:req.body.cimage,
+                    cimage:req.files[1].path,
                     caloriesburnt:req.body.caloriesburnt,
                 }
             ]

@@ -39,11 +39,11 @@ router.route('/search').post((req, res) => {
     .then(liveclasses => res.json(liveclasses))
     .catch(err => res.status(400).json('Error: ' + err));
 });
-router.post('/add',upload.single('image'),(req,res,next)=>{
+router.post('/add',upload.array('images',2),(req,res,next)=>{
         const classname = req.body.classname;
         const sdateandtime=req.body.sdateandtime;
         const description = req.body.description;
-        const image = req.file.path;
+        const image = req.files[0].path;
         const classtype=req.body.classtype;
         const approval=req.body.approval;
         const access=req.body.access;
@@ -51,7 +51,7 @@ router.post('/add',upload.single('image'),(req,res,next)=>{
         const category=req.body.category;
         const instructor={
             name:req.body.name,
-            iimg:req.body.iimg,
+            iimg:req.files[1].path
         };
         const duration =req.body.duration;
         const caloriesburnt=req.body.caloriesburnt;
@@ -77,13 +77,13 @@ router.post('/add',upload.single('image'),(req,res,next)=>{
   .then(() => res.json('Liveclass added!'))
   .catch(err => res.status(400).json('Error: ' + err));
 });
-router.post('/update/:id',upload.single('image'),(req,res,next)=>{
+router.post('/update/:id',upload.array('images',2),(req,res,next)=>{
     Liveclass.findById(req.params.id)
       .then(liveclass => {
         liveclass.classname = req.body.classname;
         liveclass.sdateandtime=req.body.sdateandtime;
         liveclass.description = req.body.description;
-        liveclass.image = req.file.path;
+        liveclass.image = req.files[0].path;
         liveclass.classtype=req.body.classtype;
         liveclass.approval=req.body.approval;
         liveclass.access=req.body.access;
@@ -91,7 +91,7 @@ router.post('/update/:id',upload.single('image'),(req,res,next)=>{
         liveclass.category=req.body.category;
         liveclass.instructor={
             name:req.body.name,
-            iimg:req.body.iimg,
+            iimg:req.files[1].path
         };
         liveclass.duration =req.body.duration;
         liveclass.caloriesburnt=req.body.caloriesburnt;
