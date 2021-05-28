@@ -27,7 +27,7 @@ const programSchema=new Schema(
             category:[
                 {
                     categoryname:{type:String},
-                    image:{type:String},
+                    cimage:{type:String},
                     caloriesburnt:{type:String},
                 }
             ]

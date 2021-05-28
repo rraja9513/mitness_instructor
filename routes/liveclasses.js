@@ -1,4 +1,28 @@
 const router=require('express').Router();
+const multer=require('multer');
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function(req, file, cb) {
+      cb(null, Date.now() + file.originalname);  
+  }
+});
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
 let Liveclass=require('../models/liveclass.model');
 router.route('/').get((req,res)=>{
     Liveclass.find()
@@ -15,11 +39,11 @@ router.route('/search').post((req, res) => {
     .then(liveclasses => res.json(liveclasses))
     .catch(err => res.status(400).json('Error: ' + err));
 });
-router.route('/add').post((req, res) => {
+router.post('/add',upload.single('image'),(req,res,next)=>{
         const classname = req.body.classname;
         const sdateandtime=req.body.sdateandtime;
         const description = req.body.description;
-        const image = req.body.image;
+        const image = req.file.path;
         const classtype=req.body.classtype;
         const approval=req.body.approval;
         const access=req.body.access;
@@ -27,7 +51,7 @@ router.route('/add').post((req, res) => {
         const category=req.body.category;
         const instructor={
             name:req.body.name,
-            img:req.body.img,
+            iimg:req.body.iimg,
         };
         const duration =req.body.duration;
         const caloriesburnt=req.body.caloriesburnt;
@@ -53,13 +77,13 @@ router.route('/add').post((req, res) => {
   .then(() => res.json('Liveclass added!'))
   .catch(err => res.status(400).json('Error: ' + err));
 });
-router.route('/update/:id').post((req, res) => {
+router.post('/update/:id',upload.single('image'),(req,res,next)=>{
     Liveclass.findById(req.params.id)
       .then(liveclass => {
         liveclass.classname = req.body.classname;
         liveclass.sdateandtime=req.body.sdateandtime;
         liveclass.description = req.body.description;
-        liveclass.image = req.body.image;
+        liveclass.image = req.file.path;
         liveclass.classtype=req.body.classtype;
         liveclass.approval=req.body.approval;
         liveclass.access=req.body.access;
@@ -67,7 +91,7 @@ router.route('/update/:id').post((req, res) => {
         liveclass.category=req.body.category;
         liveclass.instructor={
             name:req.body.name,
-            img:req.body.img,
+            iimg:req.body.iimg,
         };
         liveclass.duration =req.body.duration;
         liveclass.caloriesburnt=req.body.caloriesburnt;
