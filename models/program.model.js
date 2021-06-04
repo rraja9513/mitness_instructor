@@ -62,6 +62,9 @@ const programSchema=new Schema(
         status:{
             type:String,
         },
+        subscribe:{
+            type:String
+        }
     },
     {
         timestamps:true,

@@ -64,6 +64,7 @@ router.route('/search').post((req, res) => {
     const instructorprofile=req.body.instructorprofile;
     const pmaterial=req.body.pmaterial;
     const status=req.body.status;
+    const subscribe=req.body.subscribe;
     const newProgram=new Program({
         classname,
         sdateandtime,
@@ -79,6 +80,7 @@ router.route('/search').post((req, res) => {
         instructorprofile,
         pmaterial,
         status,
+        subscribe
     })
     newProgram.save()
   .then(() => res.json('Program added!'))
