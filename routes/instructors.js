@@ -109,10 +109,23 @@ router.route('/update/:id').post((req, res) => {
     Instructor.findById(req.params.id)
       .then(instructor => {
         instructor.firstname = req.body.firstname;
-        instructor.lastname = req.body.lastname;
-        instructor.email = req.body.email;
-        instructor.gender =req.body.gender;
-  
+        instructor.lastname=req.body.lastname;
+        instructor.email=req.body.email;
+        instructor.role=req.body.role;
+        instructor.age=req.body.age;
+        instructor.weight=req.body.weight;
+        instructor.height=req.body.height;
+        instructor.gender=req.body.gender;
+        instructor.phonenumber=req.body.phonenumber;
+        instructor.career=req.body.career;
+        instructor.introduction=req.body.introduction;
+        instructor.briefhistory=req.body.briefhistory;
+        instructor.specializedin=req.body.specializedin;
+        instructor.status=req.body.status;
+        instructor.posttype=req.body.posttype;
+        instructor.numberofapplicants=req.body.numberofapplicants;
+        instructor.numberofattendees=req.body.numberofattendees;
+        instructor.numberofsubscribers=req.body.numberofsubscribers;
         instructor.save()
           .then(() => res.json('Instructor updated!'))
           .catch(err => res.status(400).json('Error: ' + err));
