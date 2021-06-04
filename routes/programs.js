@@ -56,7 +56,7 @@ router.route('/search').post((req, res) => {
         category:[
             {
                 categoryname:req.body.categoryname,
-                // cimage:req.files[1].path,
+                cimage:req.files[1].path,
                 caloriesburnt:req.body.caloriesburnt,
             }
         ]
@@ -104,7 +104,7 @@ router.route('/search').post((req, res) => {
             category:[
                 {
                     categoryname:req.body.categoryname,
-                    // cimage:req.files[1].path,
+                    cimage:req.files[1].path,
                     caloriesburnt:req.body.caloriesburnt,
                 }
             ]
