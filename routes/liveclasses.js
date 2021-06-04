@@ -24,12 +24,12 @@ const upload = multer({
   fileFilter: fileFilter
 });
 let Liveclass=require('../models/liveclass.model');
-router.route('/').get((req,res)=>{
+router.route('/').post((req,res)=>{
     Liveclass.find()
     .then(liveclasses=>res.json(liveclasses))
     .catch(err=>res.status(400).json('Error:'+err));
 });
-router.route('/:id').get((req, res) => {
+router.route('/:id').post((req, res) => {
   Liveclass.findById(req.params.id)
     .then(liveclass => res.json(liveclass))
     .catch(err => res.status(400).json('Error: ' + err));

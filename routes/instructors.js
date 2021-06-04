@@ -1,12 +1,12 @@
 const router=require('express').Router();
 const passport=require('passport');
 let Instructor=require('../models/instructor.model');
-router.route('/').get((req, res) => {
+router.route('/').post((req, res) => {
     Instructor.find()
       .then(instructors => res.json(instructors))
       .catch(err => res.status(400).json('Error: ' + err));
   });
-  router.route('/:id').get((req, res) => {
+  router.route('/:id').post((req, res) => {
     Instructor.findById(req.params.id)
       .then(instructor => res.json(instructor))
       .catch(err => res.status(400).json('Error: ' + err));

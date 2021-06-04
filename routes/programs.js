@@ -24,12 +24,12 @@ const upload = multer({
   fileFilter: fileFilter
 });
 let Program=require('../models/program.model');
-router.route('/').get((req,res)=>{
+router.route('/').post((req,res)=>{
     Program.find()
     .then(programs=>res.json(programs))
     .catch(err=>res.status(400).json('Error:'+err));
 });
-router.route('/:id').get((req, res) => {
+router.route('/:id').post((req, res) => {
     Program.findById(req.params.id)
       .then(program => res.json(program))
       .catch(err => res.status(400).json('Error: ' + err));
