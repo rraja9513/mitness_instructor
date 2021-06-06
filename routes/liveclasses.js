@@ -29,7 +29,7 @@ router.route('/').post((req,res)=>{
     .then(liveclasses=>res.json(liveclasses))
     .catch(err=>res.status(400).json('Error:'+err));
 });
-router.route('/:id').post((req, res) => {
+router.route('/:id').get((req, res) => {
   Liveclass.findById(req.params.id)
     .then(liveclass => res.json(liveclass))
     .catch(err => res.status(400).json('Error: ' + err));

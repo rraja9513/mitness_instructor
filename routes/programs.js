@@ -29,7 +29,7 @@ router.route('/').post((req,res)=>{
     .then(programs=>res.json(programs))
     .catch(err=>res.status(400).json('Error:'+err));
 });
-router.route('/:id').post((req, res) => {
+router.route('/:id').get((req, res) => {
     Program.findById(req.params.id)
       .then(program => res.json(program))
       .catch(err => res.status(400).json('Error: ' + err));

@@ -6,7 +6,7 @@ router.route('/').post((req, res) => {
       .then(instructors => res.json(instructors))
       .catch(err => res.status(400).json('Error: ' + err));
   });
-  router.route('/:id').post((req, res) => {
+  router.route('/:id').get((req, res) => {
     Instructor.findById(req.params.id)
       .then(instructor => res.json(instructor))
       .catch(err => res.status(400).json('Error: ' + err));
