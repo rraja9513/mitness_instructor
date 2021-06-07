@@ -122,4 +122,9 @@ router.route('/search').post((req, res) => {
       .then(() => res.json('Program deleted.'))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+  router.route('/delete').post(async(req,res)=>{
+    const ids=req.body.arrayids;
+    await Program.deleteMany({_id:{$in:ids}})
+    res.status(200).json({ message: 'Deleted Successfully'});
+  })
   module.exports=router;

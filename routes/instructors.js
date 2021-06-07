@@ -156,4 +156,9 @@ router.route('/update/:id').post((req, res) => {
       .then(() => res.json('Instructor deleted.'))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+  router.route('/delete').post(async(req,res)=>{
+    const ids=req.body.arrayids;
+    await Instructor.deleteMany({_id:{$in:ids}})
+    res.status(200).json({ message: 'Deleted Successfully'});
+  })
  module.exports=router;
