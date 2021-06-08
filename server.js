@@ -29,9 +29,11 @@ passport.deserializeUser(Instructor.deserializeUser());
 const instructorRouter=require('./routes/instructors');
 const programRouter=require('./routes/programs');
 const liveclassRouter=require('./routes/liveclasses');
+const subscriberRouter=require('./routes/subscribers');
 app.use('/instructors',instructorRouter);
 app.use('/programs',programRouter);
 app.use('/liveclasses',liveclassRouter);
+app.use('/subscribers',subscriberRouter);
 app.listen(port,function(){
     console.log("Server started Successfully");
 });
